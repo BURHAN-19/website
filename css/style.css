@@ -894,6 +894,88 @@ h1, h2, h3, h4, h5, h6 {
   gap: 1.25rem;
 }
 
+/* Leadership Card */
+.leadership-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  align-items: center;
+}
+
+.leadership-img-wrap {
+  height: 100%;
+  min-height: 390px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.leadership-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: var(--transition);
+}
+
+.leadership-content {
+  padding: 3rem 2.5rem;
+}
+
+.leadership-content blockquote {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  font-style: italic;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.leadership-author {
+  border-top: 1px solid var(--border-light);
+  padding-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.leadership-author h4 {
+  color: var(--primary);
+  font-size: 1.25rem;
+  margin-bottom: 0.15rem;
+}
+
+.leadership-author .role {
+  color: var(--accent-dark);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.leadership-author .org {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .leadership-card {
+    grid-template-columns: 1fr;
+  }
+  .leadership-img-wrap {
+    min-height: 320px;
+    max-height: 380px;
+  }
+  .leadership-content {
+    padding: 2rem 1.5rem;
+  }
+}
+
 /* Map Container */
 .map-container {
   width: 100%;
