@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFeeCalculator();
   initContactForm();
   initActiveNavLink();
+  initLightbox();
 });
 
 // Mobile Navigation Toggle
@@ -175,4 +176,68 @@ function initContactForm() {
       window.location.href = `mailto:shahzadalishahjaffri@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     });
   }
+}
+
+
+// Image Gallery Lightbox Modal
+function initLightbox() {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const modal = document.getElementById('gallery-lightbox');
+  if (!modal || galleryItems.length === 0) return;
+
+  const modalImg = modal.querySelector('.lightbox-img');
+  const modalCaption = modal.querySelector('.lightbox-caption');
+  const closeBtn = modal.querySelector('.lightbox-close');
+  const prevBtn = modal.querySelector('.lightbox-prev');
+  const nextBtn = modal.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+  const itemsData = Array.from(galleryItems).map(item => ({
+    src: item.getAttribute('data-src') || item.querySelector('img').src,
+    caption: item.querySelector('h4')?.textContent || 'Gallery Photo'
+  }));
+
+  function showImage(index) {
+    if (index < 0) index = itemsData.length - 1;
+    if (index >= itemsData.length) index = 0;
+    currentIndex = index;
+    modalImg.src = itemsData[currentIndex].src;
+    modalCaption.textContent = itemsData[currentIndex].caption;
+  }
+
+  galleryItems.forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      showImage(idx);
+      modal.classList.add('active');
+    });
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex - 1);
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showImage(currentIndex + 1);
+    });
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') modal.classList.remove('active');
+    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+  });
 }
