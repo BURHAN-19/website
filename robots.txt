@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Canonical Sitemap for The Ambassadors of Knowledge
+Sitemap: https://aok.site.je/sitemap.xml

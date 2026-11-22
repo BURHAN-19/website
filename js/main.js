@@ -1,0 +1,178 @@
+/**
+ * The Ambassadors of Knowledge - Main JavaScript
+ * Domain: https://aok.site.je
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initMobileNav();
+  initFeeCalculator();
+  initContactForm();
+  initActiveNavLink();
+});
+
+// Mobile Navigation Toggle
+function initMobileNav() {
+  const toggleBtn = document.querySelector('.mobile-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (!toggleBtn || !navMenu) return;
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!toggleBtn.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
+// Active Nav Link Detection
+function initActiveNavLink() {
+  const currentPath = window.location.pathname.replace(/\/$/, '');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPath || (currentPath === '' && href === 'index.html') || (currentPath.endsWith(href))) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Interactive Fee Calculator
+function initFeeCalculator() {
+  const gradeSelect = document.getElementById('calc-grade');
+  const feeDisplay = document.getElementById('calc-fee-amount');
+  const annualDisplay = document.getElementById('calc-annual-amount');
+  const siblingCheck = document.getElementById('calc-sibling');
+  const applyBtn = document.getElementById('calc-apply-btn');
+
+  if (!gradeSelect || !feeDisplay) return;
+
+  const feeData = {
+    'playgroup': { name: 'Playgroup', fee: 1500 },
+    'nursery': { name: 'Nursery', fee: 1500 },
+    'prep': { name: 'Prep', fee: 1500 },
+    'class1': { name: 'Class 1', fee: 1600 },
+    'class2': { name: 'Class 2', fee: 1800 },
+    'class3': { name: 'Class 3', fee: 1800 },
+    'class4': { name: 'Class 4', fee: 1800 },
+    'class5': { name: 'Class 5', fee: 2000 },
+    'class6': { name: 'Class 6', fee: 2200 },
+    'class7': { name: 'Class 7', fee: 2200 },
+    'class8': { name: 'Class 8', fee: 2200 },
+    'pre9': { name: 'Pre-9', fee: 2500 },
+    'class9': { name: 'Class 9 (Arts)', fee: 2500 },
+    'class10': { name: 'Class 10 (Arts)', fee: 2500 }
+  };
+
+  function updateFee() {
+    const selectedKey = gradeSelect.value;
+    const item = feeData[selectedKey] || { name: 'Grade', fee: 1500 };
+    let monthly = item.fee;
+
+    // Optional sibling discount (10% off)
+    const isSibling = siblingCheck && siblingCheck.checked;
+    if (isSibling) {
+      monthly = Math.round(monthly * 0.9);
+    }
+
+    const annual = monthly * 12;
+
+    feeDisplay.textContent = `Rs. ${monthly.toLocaleString()} / month`;
+    if (annualDisplay) {
+      annualDisplay.textContent = `Rs. ${annual.toLocaleString()} / year (Tuition)`;
+    }
+
+    if (applyBtn) {
+      applyBtn.href = `contact.html?grade=${encodeURIComponent(item.name)}`;
+    }
+  }
+
+  gradeSelect.addEventListener('change', updateFee);
+  if (siblingCheck) {
+    siblingCheck.addEventListener('change', updateFee);
+  }
+
+  // Initial calculation
+  updateFee();
+}
+
+// Contact & Inquiry Form Handler
+function initContactForm() {
+  const form = document.getElementById('admission-inquiry-form');
+  if (!form) return;
+
+  // Auto-fill grade from URL query if present (e.g. contact.html?grade=Class%209)
+  const urlParams = new URLSearchParams(window.location.search);
+  const gradeParam = urlParams.get('grade');
+  if (gradeParam) {
+    const gradeSelect = form.querySelector('[name="student_grade"]');
+    if (gradeSelect) {
+      for (let option of gradeSelect.options) {
+        if (option.text.toLowerCase().includes(gradeParam.toLowerCase())) {
+          option.selected = true;
+          break;
+        }
+      }
+    }
+  }
+
+  const whatsappBtn = document.getElementById('submit-whatsapp');
+  const emailBtn = document.getElementById('submit-email');
+
+  function getFormData() {
+    const name = form.querySelector('[name="parent_name"]')?.value.trim();
+    const phone = form.querySelector('[name="phone"]')?.value.trim();
+    const grade = form.querySelector('[name="student_grade"]')?.value;
+    const message = form.querySelector('[name="message"]')?.value.trim();
+
+    if (!name || !phone) {
+      alert('Please enter your name and phone number so we can get in touch.');
+      return null;
+    }
+
+    return { name, phone, grade: grade || 'General Inquiry', message: message || 'N/A' };
+  }
+
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const data = getFormData();
+      if (!data) return;
+
+      const waText = `*Admission Inquiry - The Ambassadors of Knowledge*\n` +
+                     `*Parent/Student Name:* ${data.name}\n` +
+                     `*Phone:* ${data.phone}\n` +
+                     `*Grade:* ${data.grade}\n` +
+                     `*Message/Questions:* ${data.message}\n\n` +
+                     `Sent from website: https://aok.site.je`;
+
+      const waUrl = `https://wa.me/923475409209?text=${encodeURIComponent(waText)}`;
+      window.open(waUrl, '_blank');
+    });
+  }
+
+  if (emailBtn) {
+    emailBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const data = getFormData();
+      if (!data) return;
+
+      const subject = `Admission Inquiry for ${data.grade} - ${data.name}`;
+      const body = `Dear Administration,\n\nI would like to inquire about admission at The Ambassadors of Knowledge:\n\n` +
+                   `Name: ${data.name}\n` +
+                   `Contact Phone: ${data.phone}\n` +
+                   `Grade: ${data.grade}\n` +
+                   `Message: ${data.message}\n\n` +
+                   `Location: Dhok Badam Satramile, Bhara Kahu, Islamabad`;
+
+      window.location.href = `mailto:shahzadalishahjaffri@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+}

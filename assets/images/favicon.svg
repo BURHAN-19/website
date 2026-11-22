@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#0b3c8f"/>
+  <!-- Open Book -->
+  <path d="M32 15 C26 12 16 13 14 15 L14 42 C16 40 26 39 32 42 Z" fill="#ffffff" stroke="#0084d6" stroke-width="1.5"/>
+  <path d="M32 15 C38 12 48 13 50 15 L50 42 C48 40 38 39 32 42 Z" fill="#ffffff" stroke="#0084d6" stroke-width="1.5"/>
+  <path d="M32 15 L32 42" stroke="#48bb37" stroke-width="2" stroke-linecap="round"/>
+  <!-- Supporting Hands / Glow -->
+  <path d="M12 45 C20 49 28 47 32 45 C36 47 44 49 52 45 C48 52 38 54 32 54 C26 54 16 52 12 45 Z" fill="#48bb37"/>
+</svg>
