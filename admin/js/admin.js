@@ -148,6 +148,7 @@ function initNavigation() {
       if (targetView === 'notices') renderNoticesGrid();
       if (targetView === 'gallery') renderGalleryGrid();
       if (targetView === 'settings') renderSettings();
+      if (targetView === 'cms') initCMSView();
     });
   });
 }
@@ -1631,3 +1632,180 @@ function downloadCSV(csvContent, filename) {
   link.click();
   document.body.removeChild(link);
 }
+
+/* ==========================================================================
+   CMS — Website Content Editor
+   ========================================================================== */
+
+function initCMSView() {
+  // --- Tab navigation ---
+  const tabBtns = document.querySelectorAll('.cms-tab-btn');
+  const tabPanes = document.querySelectorAll('.cms-tab-pane');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-cms-tab');
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tabPanes.forEach(p => {
+        p.style.display = p.id === `cms-tab-${target}` ? '' : 'none';
+        if (p.id === `cms-tab-${target}`) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+    });
+  });
+
+  // --- Wire save / reset buttons ---
+  const saveBtn = document.getElementById('cms-btn-publish');
+  if (saveBtn) {
+    // Remove old listeners by cloning
+    const freshSave = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(freshSave, saveBtn);
+    freshSave.addEventListener('click', saveCMSContent);
+  }
+
+  const resetBtn = document.getElementById('cms-btn-reset');
+  if (resetBtn) {
+    const freshReset = resetBtn.cloneNode(true);
+    resetBtn.parentNode.replaceChild(freshReset, resetBtn);
+    freshReset.addEventListener('click', () => {
+      if (confirm('Reset ALL website content to factory defaults? This cannot be undone.')) {
+        window.AOK_DB.resetWebsiteContent();
+        renderCMSContent();
+        showToast('Website content reset to defaults.', 'info');
+      }
+    });
+  }
+
+  // --- Populate fields ---
+  renderCMSContent();
+}
+
+function renderCMSContent() {
+  const c = window.AOK_DB.getWebsiteContent();
+  if (!c) return;
+
+  const set = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val || '';
+  };
+
+  // General & Contact
+  set('cms-school-name',     c.general?.schoolName);
+  set('cms-slogan',          c.general?.slogan);
+  set('cms-admissions-badge',c.general?.admissionsBadge);
+  set('cms-phone',           c.general?.phone);
+  set('cms-whatsapp',        c.general?.whatsapp);
+  set('cms-email',           c.general?.email);
+  set('cms-address',         c.general?.address);
+  set('cms-office-hours',    c.general?.officeHours);
+  set('cms-sunday-status',   c.general?.sundayStatus);
+
+  // Hero Banner
+  set('cms-hero-motto-tag',  c.hero?.mottoTag);
+  set('cms-hero-title',      c.hero?.title);
+  set('cms-hero-desc',       c.hero?.description);
+  set('cms-hero-stat1-title',c.hero?.stat1Title);
+  set('cms-hero-stat1-desc', c.hero?.stat1Desc);
+  set('cms-hero-stat2-title',c.hero?.stat2Title);
+  set('cms-hero-stat2-desc', c.hero?.stat2Desc);
+  set('cms-hero-stat3-title',c.hero?.stat3Title);
+  set('cms-hero-stat3-desc', c.hero?.stat3Desc);
+
+  // Principal / Leadership
+  set('cms-leader-name',  c.leadership?.name);
+  set('cms-leader-qual',  c.leadership?.qualification);
+  set('cms-leader-role',  c.leadership?.role);
+  set('cms-leader-org',   c.leadership?.organization);
+  set('cms-leader-quote', c.leadership?.quote);
+  set('cms-leader-msg',   c.leadership?.message);
+
+  // Fees
+  set('cms-fee-playgroup', c.fees?.playgroup);
+  set('cms-fee-nursery',   c.fees?.nursery);
+  set('cms-fee-prep',      c.fees?.prep);
+  set('cms-fee-class1',    c.fees?.class1);
+  set('cms-fee-class2',    c.fees?.class2);
+  set('cms-fee-class3',    c.fees?.class3);
+  set('cms-fee-class4',    c.fees?.class4);
+  set('cms-fee-class5',    c.fees?.class5);
+  set('cms-fee-class6',    c.fees?.class6);
+  set('cms-fee-class7',    c.fees?.class7);
+  set('cms-fee-class8',    c.fees?.class8);
+  set('cms-fee-pre9',      c.fees?.pre9);
+  set('cms-fee-class9',    c.fees?.class9);
+  set('cms-fee-class10',   c.fees?.class10);
+  set('cms-fee-sibling',   c.fees?.siblingDiscount);
+
+  // Vision & Mission
+  set('cms-about-heritage', c.about?.heritageHeadline);
+  set('cms-about-vision',   c.about?.vision);
+  set('cms-about-mission',  c.about?.mission);
+  set('cms-about-values',   c.about?.coreValues);
+}
+
+window.saveCMSContent = function saveCMSContent() {
+  const get = id => {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  };
+
+  const content = {
+    general: {
+      schoolName:      get('cms-school-name'),
+      slogan:          get('cms-slogan'),
+      admissionsBadge: get('cms-admissions-badge'),
+      phone:           get('cms-phone'),
+      whatsapp:        get('cms-whatsapp'),
+      email:           get('cms-email'),
+      address:         get('cms-address'),
+      officeHours:     get('cms-office-hours'),
+      sundayStatus:    get('cms-sunday-status'),
+    },
+    hero: {
+      mottoTag:    get('cms-hero-motto-tag'),
+      title:       get('cms-hero-title'),
+      description: get('cms-hero-desc'),
+      stat1Title:  get('cms-hero-stat1-title'),
+      stat1Desc:   get('cms-hero-stat1-desc'),
+      stat2Title:  get('cms-hero-stat2-title'),
+      stat2Desc:   get('cms-hero-stat2-desc'),
+      stat3Title:  get('cms-hero-stat3-title'),
+      stat3Desc:   get('cms-hero-stat3-desc'),
+    },
+    leadership: {
+      name:         get('cms-leader-name'),
+      qualification:get('cms-leader-qual'),
+      role:         get('cms-leader-role'),
+      organization: get('cms-leader-org'),
+      quote:        get('cms-leader-quote'),
+      message:      get('cms-leader-msg'),
+    },
+    fees: {
+      playgroup:      parseFloat(get('cms-fee-playgroup'))  || 0,
+      nursery:        parseFloat(get('cms-fee-nursery'))    || 0,
+      prep:           parseFloat(get('cms-fee-prep'))       || 0,
+      class1:         parseFloat(get('cms-fee-class1'))     || 0,
+      class2:         parseFloat(get('cms-fee-class2'))     || 0,
+      class3:         parseFloat(get('cms-fee-class3'))     || 0,
+      class4:         parseFloat(get('cms-fee-class4'))     || 0,
+      class5:         parseFloat(get('cms-fee-class5'))     || 0,
+      class6:         parseFloat(get('cms-fee-class6'))     || 0,
+      class7:         parseFloat(get('cms-fee-class7'))     || 0,
+      class8:         parseFloat(get('cms-fee-class8'))     || 0,
+      pre9:           parseFloat(get('cms-fee-pre9'))       || 0,
+      class9:         parseFloat(get('cms-fee-class9'))     || 0,
+      class10:        parseFloat(get('cms-fee-class10'))    || 0,
+      siblingDiscount:parseFloat(get('cms-fee-sibling'))    || 10,
+    },
+    about: {
+      heritageHeadline: get('cms-about-heritage'),
+      vision:           get('cms-about-vision'),
+      mission:          get('cms-about-mission'),
+      coreValues:       get('cms-about-values'),
+    },
+  };
+
+  window.AOK_DB.saveWebsiteContent(content);
+  showToast('✅ Website content saved & published! Changes are now live.', 'success');
+};

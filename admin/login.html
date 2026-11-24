@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Portal Login | The Ambassadors of Knowledge</title>
-  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="/admin/css/admin.css">
   <style>
     body {
       background: radial-gradient(circle at 10% 20%, #061e47 0%, #041029 90%);
@@ -202,7 +202,7 @@
   <div class="login-container">
     <div class="login-card">
       <div class="login-header">
-        <img src="../assets/images/logo.png" alt="AOK Monogram" class="login-logo">
+        <img src="/assets/images/logo.png" alt="AOK Monogram" class="login-logo">
         <h1 class="login-title">The Ambassadors of Knowledge</h1>
         <p class="login-subtitle">School Administration Suite</p>
         <span class="login-badge">Bhara Kahu, Islamabad</span>
@@ -272,20 +272,20 @@
     </div>
 
     <div class="back-link">
-      <a href="../index.html">
+      <a href="/index.html">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Return to School Public Website
       </a>
     </div>
   </div>
 
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
+  <script src="/admin/js/db.js"></script>
+  <script src="/admin/js/auth.js"></script>
   <script>
     // If already logged in, redirect straight to dashboard
     document.addEventListener('DOMContentLoaded', () => {
       if (window.SchoolAuth && window.SchoolAuth.isAuthenticated()) {
-        window.location.href = 'index.html';
+        window.location.href = window.SchoolAuth.getDashboardUrl();
       }
 
       const loginForm = document.getElementById('admin-login-form');
@@ -311,7 +311,7 @@
 
         const result = window.SchoolAuth.login(username, password, rememberMe);
         if (result.success) {
-          window.location.href = 'index.html';
+          window.location.href = window.SchoolAuth.getDashboardUrl();
         } else {
           alertBox.className = 'login-alert error';
           alertBox.textContent = result.message || 'Login failed. Please check credentials.';

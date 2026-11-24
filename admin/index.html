@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard | The Ambassadors of Knowledge</title>
-  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <base href="/admin/">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="/admin/css/admin.css">
 </head>
 <body>
 
@@ -17,7 +18,7 @@
     <!-- Sidebar Navigation -->
     <aside class="admin-sidebar">
       <div class="sidebar-header">
-        <img src="../assets/images/logo.png" alt="AOK Logo" class="sidebar-logo">
+        <img src="/assets/images/logo.png" alt="AOK Logo" class="sidebar-logo">
         <div>
           <div class="sidebar-brand-name">AOK School</div>
           <span class="sidebar-brand-sub">Admin Portal</span>
@@ -30,6 +31,12 @@
         <div class="sidebar-item active" data-view="dashboard">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Dashboard</span>
+        </div>
+
+        <div class="sidebar-item" data-view="cms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span>Website Content (CMS)</span>
+          <span class="sidebar-item-badge blue">Edit Site</span>
         </div>
 
         <div class="sidebar-item" data-view="inquiries">
@@ -78,7 +85,7 @@
         </div>
 
         <div style="margin-top: auto; padding-top: 1.5rem;">
-          <a href="../index.html" class="sidebar-item" style="color: #94a3b8;">
+          <a href="/index.html" class="sidebar-item" style="color: #94a3b8;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             <span>View Public Site</span>
           </a>
@@ -87,7 +94,7 @@
 
       <div class="sidebar-footer">
         <div class="sidebar-user">
-          <img src="../assets/images/principal.jpg" alt="User" class="sidebar-user-avatar">
+          <img src="/assets/images/principal.jpg" alt="User" class="sidebar-user-avatar">
           <div class="sidebar-user-info">
             <div class="sidebar-user-name">Shahzad Ali Shah</div>
             <div class="sidebar-user-role">Super Admin</div>
@@ -122,9 +129,9 @@
             <input type="text" id="global-search-input" placeholder="Quick student search...">
           </div>
 
-          <button class="header-action-btn accent" onclick="openAddStudentModal()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>New Student</span>
+          <button class="header-action-btn accent" onclick="document.querySelector('.sidebar-item[data-view=cms]').click()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>Edit Website</span>
           </button>
 
           <button class="header-icon-btn" onclick="document.querySelector('.sidebar-item[data-view=inquiries]').click()" title="Admission Inquiries">
@@ -133,7 +140,7 @@
           </button>
 
           <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: 0.5rem; border-left: 1px solid var(--border-light); padding-left: 1rem;">
-            <img src="../assets/images/principal.jpg" alt="User" class="header-user-avatar" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+            <img src="/assets/images/principal.jpg" alt="User" class="header-user-avatar" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
             <div style="line-height: 1.2;">
               <div class="header-user-name" style="font-weight: 700; font-size: 0.88rem; color: var(--primary-dark);">Shahzad Ali Shah</div>
               <div class="header-user-role" style="font-size: 0.72rem; color: var(--text-muted);">Principal (MBA Finance)</div>
@@ -251,23 +258,23 @@
                 <h3 class="card-title">Admin Quick Operations</h3>
               </div>
               <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <button class="btn btn-primary" onclick="openAddStudentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                <button class="btn btn-primary" onclick="document.querySelector('.sidebar-item[data-view=cms]').click()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                  <span>Edit Website Content, Text & Fees (CMS)</span>
+                </button>
+
+                <button class="btn btn-accent" onclick="openAddStudentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                   <span>Enroll New Student with Roll Number</span>
                 </button>
 
-                <button class="btn btn-accent" onclick="openRecordPaymentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                <button class="btn btn-secondary" onclick="openRecordPaymentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                   <span>Record Cash / Bank Fee Payment</span>
                 </button>
 
-                <button class="btn btn-secondary" onclick="openAddNoticeModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                  <span>Post Official School Notice</span>
-                </button>
-
                 <div style="margin-top: 0.5rem; padding: 0.85rem; background: var(--secondary-light); border-radius: var(--radius-md); font-size: 0.82rem; color: var(--primary);">
-                  <strong>Campus Info:</strong> Dhok Badam Satramile, Bhara Kahu Islamabad.<br>
+                  <strong>Campus:</strong> Dhok Badam Satramile, Bhara Kahu Islamabad.<br>
                   <strong>Helpline:</strong> 03475409209 • <strong>Session:</strong> 2026-2027
                 </div>
               </div>
@@ -275,7 +282,257 @@
           </div>
         </section>
 
-        <!-- 2. VIEW: INQUIRIES & ADMISSIONS CRM -->
+        <!-- 2. VIEW: WEBSITE CONTENT EDITOR (CMS) -->
+        <section id="view-cms" class="admin-view">
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header" style="flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h3 class="card-title">🌐 Live Website Content Editor (CMS)</h3>
+                <p class="card-subtitle">Easily edit texts, slogans, fees, announcements, and leadership messages displayed on your school website</p>
+              </div>
+              <div class="card-actions" style="flex-wrap: wrap;">
+                <button id="cms-btn-reset" class="btn btn-sm btn-secondary" title="Restore original text defaults">Reset to Defaults</button>
+                <a href="/index.html" target="_blank" class="btn btn-sm btn-secondary" title="Open website in new tab to see edits">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  Preview Website
+                </a>
+                <button id="cms-btn-publish" class="btn btn-sm btn-accent" style="font-weight: 700;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                  Save & Publish Live to Website
+                </button>
+              </div>
+            </div>
+
+            <!-- CMS Sub-Navigation Tabs -->
+            <div class="cms-nav-tabs">
+              <button class="cms-tab-btn active" data-cms-tab="general">General & Contact</button>
+              <button class="cms-tab-btn" data-cms-tab="hero">Homepage Hero Banner</button>
+              <button class="cms-tab-btn" data-cms-tab="leadership">Principal Message</button>
+              <button class="cms-tab-btn" data-cms-tab="fees">Tuition Fees & Calculator</button>
+              <button class="cms-tab-btn" data-cms-tab="about">Vision & Mission</button>
+            </div>
+
+            <!-- TAB 1: GENERAL & CONTACT -->
+            <div id="cms-tab-general" class="cms-tab-pane active">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">School Official Name</label>
+                  <input type="text" id="cms-school-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">School Slogan / Motto</label>
+                  <input type="text" id="cms-slogan" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Topbar Admissions Badge Text</label>
+                  <input type="text" id="cms-admissions-badge" class="form-control" placeholder="e.g. Admissions Open 2026-2027">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Official Phone Number (Displayed across header, topbar, footer)</label>
+                  <input type="text" id="cms-phone" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">WhatsApp Number (e.g. 923475409209)</label>
+                  <input type="text" id="cms-whatsapp" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Official Email Address</label>
+                  <input type="email" id="cms-email" class="form-control">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Campus Physical Address</label>
+                  <input type="text" id="cms-address" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">School Office Hours</label>
+                  <input type="text" id="cms-office-hours" class="form-control" placeholder="e.g. Monday - Saturday: 8:00 AM - 2:00 PM">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Sunday Status</label>
+                  <input type="text" id="cms-sunday-status" class="form-control" value="Sunday: Closed">
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: HOMEPAGE HERO BANNER -->
+            <div id="cms-tab-hero" class="cms-tab-pane" style="display: none;">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Hero Motto Badge Tag</label>
+                  <input type="text" id="cms-hero-motto-tag" class="form-control">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Hero Main Title / Headline</label>
+                  <input type="text" id="cms-hero-title" class="form-control">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Hero Description Paragraph</label>
+                  <textarea id="cms-hero-desc" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Stat Box 1 Title</label>
+                  <input type="text" id="cms-hero-stat1-title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Stat Box 1 Label</label>
+                  <input type="text" id="cms-hero-stat1-desc" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Stat Box 2 Title</label>
+                  <input type="text" id="cms-hero-stat2-title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Stat Box 2 Label</label>
+                  <input type="text" id="cms-hero-stat2-desc" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Stat Box 3 Title</label>
+                  <input type="text" id="cms-hero-stat3-title" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Stat Box 3 Label</label>
+                  <input type="text" id="cms-hero-stat3-desc" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 3: PRINCIPAL & LEADERSHIP -->
+            <div id="cms-tab-leadership" class="cms-tab-pane" style="display: none;">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Principal / Founder Full Name</label>
+                  <input type="text" id="cms-leader-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Academic Qualification Badge</label>
+                  <input type="text" id="cms-leader-qual" class="form-control" placeholder="e.g. MBA Finance">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Role Designation</label>
+                  <input type="text" id="cms-leader-role" class="form-control" value="Principal & Founder">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Institution Affiliation</label>
+                  <input type="text" id="cms-leader-org" class="form-control" value="The Ambassadors of Knowledge, Islamabad">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Leadership Highlight Quote (Displayed in blockquote)</label>
+                  <textarea id="cms-leader-quote" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Full Leadership Message Body</label>
+                  <textarea id="cms-leader-msg" class="form-control" rows="4"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 4: TUITION FEES & CALCULATOR -->
+            <div id="cms-tab-fees" class="cms-tab-pane" style="display: none;">
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                Editing tuition rates here instantly updates the official fee tables, fee cards, and the interactive tuition calculator across the entire website.
+              </p>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Playgroup Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-playgroup" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nursery Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-nursery" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Prep Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-prep" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 1 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class1" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 2 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class2" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 3 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class3" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 4 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class4" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 5 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class5" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 6 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class6" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 7 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class7" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 8 Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class8" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Pre-9 Arts Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-pre9" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 9 (Arts) Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class9" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class 10 (Arts) Monthly Fee (PKR)</label>
+                  <input type="number" id="cms-fee-class10" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Sibling Discount Percentage (%)</label>
+                  <input type="number" id="cms-fee-sibling" class="form-control" value="10">
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 5: ABOUT, VISION & MISSION -->
+            <div id="cms-tab-about" class="cms-tab-pane" style="display: none;">
+              <div class="form-grid">
+                <div class="form-group full-width">
+                  <label class="form-label">Heritage Section Headline</label>
+                  <input type="text" id="cms-about-heritage" class="form-control">
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">School Vision Statement</label>
+                  <textarea id="cms-about-vision" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">School Mission Statement</label>
+                  <textarea id="cms-about-mission" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group full-width">
+                  <label class="form-label">Core Values Description</label>
+                  <textarea id="cms-about-values" class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div style="font-size: 0.82rem; color: var(--text-muted);">
+                ✨ Changes are published to your website in real-time.
+              </div>
+              <button class="btn btn-primary btn-publish-action" onclick="saveCMSContent()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Publish All Changes Live
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. VIEW: INQUIRIES & ADMISSIONS CRM -->
         <section id="view-inquiries" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -328,7 +585,7 @@
           </div>
         </section>
 
-        <!-- 3. VIEW: STUDENT DIRECTORY -->
+        <!-- 4. VIEW: STUDENT DIRECTORY -->
         <section id="view-students" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -403,7 +660,7 @@
           </div>
         </section>
 
-        <!-- 4. VIEW: FEES & CHALLANS -->
+        <!-- 5. VIEW: FEES & CHALLANS -->
         <section id="view-fees" class="admin-view">
           <div class="metrics-grid" style="margin-bottom: 1.25rem;">
             <div class="metric-card">
@@ -475,7 +732,7 @@
           </div>
         </section>
 
-        <!-- 5. VIEW: CLASSES & ACADEMIC WINGS -->
+        <!-- 6. VIEW: CLASSES & ACADEMIC WINGS -->
         <section id="view-classes" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -504,7 +761,7 @@
           </div>
         </section>
 
-        <!-- 6. VIEW: FACULTY & STAFF -->
+        <!-- 7. VIEW: FACULTY & STAFF -->
         <section id="view-staff" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -521,7 +778,7 @@
           </div>
         </section>
 
-        <!-- 7. VIEW: NOTICE BOARD -->
+        <!-- 8. VIEW: NOTICE BOARD -->
         <section id="view-notices" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -538,7 +795,7 @@
           </div>
         </section>
 
-        <!-- 8. VIEW: MEDIA GALLERY -->
+        <!-- 9. VIEW: MEDIA GALLERY -->
         <section id="view-gallery" class="admin-view">
           <div class="card">
             <div class="card-header">
@@ -554,7 +811,7 @@
           </div>
         </section>
 
-        <!-- 9. VIEW: SETTINGS & BACKUP -->
+        <!-- 10. VIEW: SETTINGS & BACKUP -->
         <section id="view-settings" class="admin-view">
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
             
@@ -991,8 +1248,8 @@
   <div id="printable-idcard-container"></div>
 
   <!-- Scripts -->
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
+  <script src="/admin/js/db.js"></script>
+  <script src="/admin/js/auth.js"></script>
+  <script src="/admin/js/admin.js"></script>
 </body>
 </html>

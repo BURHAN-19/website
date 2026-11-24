@@ -7,6 +7,63 @@ const AOK_DB_KEY = 'aok_school_database_v1';
 
 // Seed Initial Data
 const DEFAULT_DATABASE = {
+  website_content: {
+    general: {
+      schoolName: 'The Ambassadors of Knowledge',
+      shortName: 'AOK',
+      slogan: 'Your Bright Future Starts Here',
+      phone: '03475409209',
+      email: 'shahzadalishahjaffri@gmail.com',
+      address: 'Dhok Badam Satramile, Bhara Kahu, Islamabad',
+      admissionsBadge: 'Admissions Open 2026-2027',
+      whatsappPhone: '923475409209',
+      officeHours: 'Monday - Saturday: 8:00 AM - 2:00 PM',
+      sundayStatus: 'Sunday: Closed'
+    },
+    hero: {
+      mottoTag: '✨ Your Bright Future Starts Here',
+      title: 'Empowering Minds, Shaping Tomorrow\'s Leaders',
+      desc: 'Welcome to The Ambassadors of Knowledge in Dhok Badam Satramile, Bhara Kahu, Islamabad. Providing a nurturing, values-driven environment from Playgroup up to Matric (Class 10 Arts Stream).',
+      stat1Title: 'Playgroup - 10th',
+      stat1Desc: 'Comprehensive Academic Span',
+      stat2Title: 'Rs. 1,500',
+      stat2Desc: 'Affordable Starting Fees',
+      stat3Title: 'Arts Specialization',
+      stat3Desc: '9th & 10th Board Preparation'
+    },
+    leadership: {
+      name: 'Shahzad Ali Shah Jaffri',
+      qualification: 'MBA Finance',
+      role: 'Principal & Founder',
+      org: 'The Ambassadors of Knowledge, Islamabad',
+      quote: 'At The Ambassadors of Knowledge, we believe that education is not merely about syllabus completion—it is about cultivating moral consciousness, intellectual curiosity, and self-belief in every young learner.',
+      message: 'We established this institution in Dhok Badam, Satra Mile to bring top-tier, structured, and affordable schooling to the families of Bhara Kahu. From their first words in Playgroup to their board examinations in Class 10 Arts, our faculty treats every student with personalized care, dignity, and encouragement.'
+    },
+    fees: {
+      playgroup: 1500,
+      nursery: 1500,
+      prep: 1500,
+      class1: 1600,
+      class2: 1800,
+      class3: 1800,
+      class4: 1800,
+      class5: 2000,
+      class6: 2200,
+      class7: 2200,
+      class8: 2200,
+      pre9: 2500,
+      class9: 2500,
+      class10: 2500,
+      siblingDiscountPercent: 10
+    },
+    about: {
+      heritageTitle: 'Nurturing Intellect and Integrity in Every Student',
+      vision: 'To be recognized as a leading community academy in Islamabad that equips youth with sharp critical intellect, ethical grounding, and creative expression to become productive ambassadors of positive societal change.',
+      mission: 'To deliver affordable, top-tier schooling from Playgroup through Matric Arts, cultivating curious minds, moral integrity, civic awareness, and self-belief in every student entrusted to our care.',
+      coreValues: 'Integrity, Compassion, Curiosity, and Perseverance. We instill these values through classroom discussions, teacher mentorship, assembly reminders, and daily student interactions.'
+    }
+  },
+
   settings: {
     schoolName: 'The Ambassadors of Knowledge',
     shortName: 'AOK',
@@ -662,6 +719,21 @@ class SchoolDatabase {
   init() {
     if (!localStorage.getItem(this.storageKey)) {
       this.saveDatabase(DEFAULT_DATABASE);
+    } else {
+      // Migrate existing db if website_content is missing
+      const db = this.getDatabase();
+      if (!db.website_content) {
+        db.website_content = DEFAULT_DATABASE.website_content;
+        this.saveDatabase(db);
+      }
+    }
+
+    if (!localStorage.getItem('aok_website_content')) {
+      const db = this.getDatabase();
+      const content = db.website_content || DEFAULT_DATABASE.website_content;
+      try {
+        localStorage.setItem('aok_website_content', JSON.stringify(content));
+      } catch (e) {}
     }
   }
 
@@ -748,6 +820,27 @@ class SchoolDatabase {
     this.saveDatabase(db);
     this.logAction('Updated school settings and challan configuration.');
     return db.settings;
+  }
+
+  getWebsiteContent() {
+    const db = this.getDatabase();
+    return db.website_content || DEFAULT_DATABASE.website_content;
+  }
+
+  saveWebsiteContent(content) {
+    const db = this.getDatabase();
+    db.website_content = { ...DEFAULT_DATABASE.website_content, ...content };
+    this.saveDatabase(db);
+    try {
+      localStorage.setItem('aok_website_content', JSON.stringify(db.website_content));
+      window.dispatchEvent(new Event('aok_website_content_updated'));
+    } catch (e) {}
+    this.logAction('Updated and published live website content via CMS.');
+    return db.website_content;
+  }
+
+  resetWebsiteContent() {
+    return this.saveWebsiteContent(DEFAULT_DATABASE.website_content);
   }
 
   logAction(details, action = 'USER_ACTION', user = null) {

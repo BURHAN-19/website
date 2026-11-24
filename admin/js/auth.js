@@ -14,7 +14,7 @@ const ADMIN_ACCOUNTS = [
     role: 'Super Administrator & Principal',
     qualification: 'MBA Finance',
     badge: 'Executive',
-    avatar: '../assets/images/principal.jpg'
+    avatar: '/assets/images/principal.jpg'
   },
   {
     id: 'user_02',
@@ -25,7 +25,7 @@ const ADMIN_ACCOUNTS = [
     role: 'Accounts & Fee Incharge',
     qualification: 'B.Com / PIPFA',
     badge: 'Finance',
-    avatar: '../assets/images/logo.png'
+    avatar: '/assets/images/logo.png'
   },
   {
     id: 'user_03',
@@ -36,7 +36,7 @@ const ADMIN_ACCOUNTS = [
     role: 'Academic Coordinator',
     qualification: 'M.A. English, B.Ed',
     badge: 'Academics',
-    avatar: '../assets/images/logo.png'
+    avatar: '/assets/images/logo.png'
   }
 ];
 
@@ -44,6 +44,17 @@ class AuthManager {
   constructor() {
     this.sessionKey = AOK_AUTH_KEY;
     this.accounts = this.loadAccounts();
+  }
+
+  getLoginUrl() {
+    // If running in file:// or cleanUrls
+    if (window.location.protocol === 'file:') return 'login.html';
+    return window.location.pathname.endsWith('.html') ? '/admin/login.html' : '/admin/login';
+  }
+
+  getDashboardUrl() {
+    if (window.location.protocol === 'file:') return 'index.html';
+    return window.location.pathname.endsWith('.html') ? '/admin/index.html' : '/admin';
   }
 
   loadAccounts() {
@@ -107,7 +118,7 @@ class AuthManager {
     }
     localStorage.removeItem(this.sessionKey);
     sessionStorage.removeItem(this.sessionKey);
-    window.location.href = 'login.html';
+    window.location.href = this.getLoginUrl();
   }
 
   getCurrentUser() {
@@ -132,7 +143,7 @@ class AuthManager {
 
   requireAuth() {
     if (!this.isAuthenticated()) {
-      window.location.href = 'login.html';
+      window.location.href = this.getLoginUrl();
       return false;
     }
     return true;
@@ -140,7 +151,7 @@ class AuthManager {
 
   redirectIfAuthenticated() {
     if (this.isAuthenticated()) {
-      window.location.href = 'index.html';
+      window.location.href = this.getDashboardUrl();
       return true;
     }
     return false;
