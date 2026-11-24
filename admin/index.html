@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | The Ambassadors of Knowledge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="admin-layout">
+
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="../assets/images/logo.png" alt="AOK Logo" class="sidebar-logo">
+        <div>
+          <div class="sidebar-brand-name">AOK School</div>
+          <span class="sidebar-brand-sub">Admin Portal</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-heading">Main Navigation</div>
+
+        <div class="sidebar-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </div>
+
+        <div class="sidebar-item" data-view="inquiries">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Admissions / Inquiries</span>
+          <span id="badge-inquiries-count" class="sidebar-item-badge">0</span>
+        </div>
+
+        <div class="sidebar-item" data-view="students">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Student Directory</span>
+        </div>
+
+        <div class="sidebar-item" data-view="fees">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          <span>Fee & Challans</span>
+        </div>
+
+        <div class="sidebar-heading">Academics & Operations</div>
+
+        <div class="sidebar-item" data-view="classes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span>Classes & Wings</span>
+        </div>
+
+        <div class="sidebar-item" data-view="staff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span>Faculty & Staff</span>
+        </div>
+
+        <div class="sidebar-item" data-view="notices">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span>Notice Board</span>
+        </div>
+
+        <div class="sidebar-item" data-view="gallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          <span>School Gallery</span>
+        </div>
+
+        <div class="sidebar-heading">System & Config</div>
+
+        <div class="sidebar-item" data-view="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings & Backup</span>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 1.5rem;">
+          <a href="../index.html" class="sidebar-item" style="color: #94a3b8;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>View Public Site</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <img src="../assets/images/principal.jpg" alt="User" class="sidebar-user-avatar">
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">Shahzad Ali Shah</div>
+            <div class="sidebar-user-role">Super Admin</div>
+          </div>
+        </div>
+        <button class="action-logout btn-icon del" title="Sign Out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+
+      <!-- Top Header Sticky Bar -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button id="mobile-sidebar-toggle" class="mobile-menu-toggle" aria-label="Toggle sidebar menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="header-title-box">
+            <h2 id="header-view-title">Dashboard</h2>
+            <div class="header-breadcrumb">
+              <span>Admin</span> / <span id="header-breadcrumb-view">Overview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="header-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="global-search-input" placeholder="Quick student search...">
+          </div>
+
+          <button class="header-action-btn accent" onclick="openAddStudentModal()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>New Student</span>
+          </button>
+
+          <button class="header-icon-btn" onclick="document.querySelector('.sidebar-item[data-view=inquiries]').click()" title="Admission Inquiries">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span id="header-inquiries-badge" class="header-icon-badge" style="display: none;">0</span>
+          </button>
+
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: 0.5rem; border-left: 1px solid var(--border-light); padding-left: 1rem;">
+            <img src="../assets/images/principal.jpg" alt="User" class="header-user-avatar" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">
+            <div style="line-height: 1.2;">
+              <div class="header-user-name" style="font-weight: 700; font-size: 0.88rem; color: var(--primary-dark);">Shahzad Ali Shah</div>
+              <div class="header-user-role" style="font-size: 0.72rem; color: var(--text-muted);">Principal (MBA Finance)</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="admin-content">
+
+        <!-- 1. VIEW: DASHBOARD OVERVIEW -->
+        <section id="view-dashboard" class="admin-view active">
+          <!-- KPI Metrics Row -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div>
+                <div class="metric-label">Total Enrolled Students</div>
+                <div id="kpi-total-students" class="metric-value">15</div>
+                <div class="metric-trend positive">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
+                  <span>Active Session 2026-27</span>
+                </div>
+              </div>
+              <div class="metric-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+
+            <div class="metric-card accent">
+              <div>
+                <div class="metric-label">Monthly Fee Collection</div>
+                <div id="kpi-fee-collection" class="metric-value">Rs. 32,250</div>
+                <div id="kpi-fee-rate" class="metric-trend positive">78% Recovery</div>
+              </div>
+              <div class="metric-icon-wrap green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+            </div>
+
+            <div class="metric-card warning">
+              <div>
+                <div class="metric-label">Pending Inquiries</div>
+                <div id="kpi-pending-inquiries" class="metric-value">2</div>
+                <div class="metric-trend alert">Action Required</div>
+              </div>
+              <div class="metric-icon-wrap amber">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+            </div>
+
+            <div class="metric-card secondary">
+              <div>
+                <div class="metric-label">Faculty & Staff</div>
+                <div id="kpi-staff-count" class="metric-value">6</div>
+                <div class="metric-trend neutral">All Departments</div>
+              </div>
+              <div class="metric-icon-wrap blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="dashboard-charts-grid">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Enrollment Distribution by Academic Wing</h3>
+                  <p class="card-subtitle">Student breakdown from Playgroup through Matric Arts Wing</p>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="document.querySelector('.sidebar-item[data-view=students]').click()">View All Students</button>
+              </div>
+              <div id="enrollment-bar-chart" class="chart-container">
+                <!-- SVG bar chart injected via JS -->
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item"><span class="legend-dot" style="background: #0084d6;"></span> Early Years</div>
+                <div class="legend-item"><span class="legend-dot" style="background: #0b3c8f;"></span> Primary Wing</div>
+                <div class="legend-item"><span class="legend-dot" style="background: #48bb37;"></span> Middle Wing</div>
+                <div class="legend-item"><span class="legend-dot" style="background: #f59e0b;"></span> Matric Arts Group</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Wing Capacity & Arts Focus</h3>
+                  <p class="card-subtitle">Active student enrollment share</p>
+                </div>
+              </div>
+              <div id="wing-progress-list" class="wing-stat-list">
+                <!-- Wing progress bars injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Grid: Recent Inquiries & Quick Action Tools -->
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem;">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Latest Admission Inquiries</h3>
+                  <p class="card-subtitle">Direct submissions from the school website</p>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="document.querySelector('.sidebar-item[data-view=inquiries]').click()">Inquiries CRM</button>
+              </div>
+              <div id="dashboard-recent-inquiries">
+                <!-- Recent inquiries list injected via JS -->
+              </div>
+            </div>
+
+            <div class="card" style="background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);">
+              <div class="card-header">
+                <h3 class="card-title">Admin Quick Operations</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="btn btn-primary" onclick="openAddStudentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7.5" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                  <span>Enroll New Student with Roll Number</span>
+                </button>
+
+                <button class="btn btn-accent" onclick="openRecordPaymentModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  <span>Record Cash / Bank Fee Payment</span>
+                </button>
+
+                <button class="btn btn-secondary" onclick="openAddNoticeModal()" style="justify-content: flex-start; padding: 0.75rem 1rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                  <span>Post Official School Notice</span>
+                </button>
+
+                <div style="margin-top: 0.5rem; padding: 0.85rem; background: var(--secondary-light); border-radius: var(--radius-md); font-size: 0.82rem; color: var(--primary);">
+                  <strong>Campus Info:</strong> Dhok Badam Satramile, Bhara Kahu Islamabad.<br>
+                  <strong>Helpline:</strong> 03475409209 • <strong>Session:</strong> 2026-2027
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. VIEW: INQUIRIES & ADMISSIONS CRM -->
+        <section id="view-inquiries" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Website Admission Inquiries</h3>
+                <p class="card-subtitle">Manage, contact, and enroll prospective students from the online contact form</p>
+              </div>
+              <button id="btn-export-inquiries" class="btn btn-sm btn-secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export CSV
+              </button>
+            </div>
+
+            <div class="table-toolbar">
+              <div class="table-search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="inquiries-search" placeholder="Search by parent, student, or phone...">
+              </div>
+
+              <div class="table-filters">
+                <select id="inquiries-status-filter" class="filter-select">
+                  <option value="all">All Inquiry Statuses</option>
+                  <option value="new">New (Unread)</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="interview_scheduled">Interview Set</option>
+                  <option value="admitted">Admitted</option>
+                  <option value="declined">Declined</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Parent / Contact</th>
+                    <th>Child Name</th>
+                    <th>Class Requested</th>
+                    <th>Message Details</th>
+                    <th>Date Received</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="inquiries-table-body">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. VIEW: STUDENT DIRECTORY -->
+        <section id="view-students" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Student Directory & Profiles</h3>
+                <p class="card-subtitle">Comprehensive registry of all active students at The Ambassadors of Knowledge</p>
+              </div>
+              <div class="card-actions">
+                <button id="btn-export-students" class="btn btn-sm btn-secondary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Export CSV
+                </button>
+                <button id="btn-add-student" class="btn btn-sm btn-primary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  Enroll Student
+                </button>
+              </div>
+            </div>
+
+            <div class="table-toolbar">
+              <div class="table-search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="students-search" placeholder="Search by name, roll number, father...">
+              </div>
+
+              <div class="table-filters">
+                <select id="students-grade-filter" class="filter-select">
+                  <option value="all">All Grades</option>
+                  <option value="Playgroup">Playgroup</option>
+                  <option value="Nursery">Nursery</option>
+                  <option value="Prep">Prep</option>
+                  <option value="Class 1">Class 1</option>
+                  <option value="Class 2">Class 2</option>
+                  <option value="Class 3">Class 3</option>
+                  <option value="Class 4">Class 4</option>
+                  <option value="Class 5">Class 5</option>
+                  <option value="Class 6">Class 6</option>
+                  <option value="Class 7">Class 7</option>
+                  <option value="Class 8">Class 8</option>
+                  <option value="Pre-9">Pre-9 Arts</option>
+                  <option value="Class 9 (Arts)">Class 9 (Arts)</option>
+                  <option value="Class 10 (Arts)">Class 10 (Arts)</option>
+                </select>
+
+                <select id="students-fee-filter" class="filter-select">
+                  <option value="all">All Fee Statuses</option>
+                  <option value="paid">Fee Paid</option>
+                  <option value="unpaid">Fee Unpaid</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Roll No</th>
+                    <th>Student Name</th>
+                    <th>Father Name</th>
+                    <th>Grade & Section</th>
+                    <th>Emergency Phone</th>
+                    <th>Monthly Fee</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="students-table-body">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. VIEW: FEES & CHALLANS -->
+        <section id="view-fees" class="admin-view">
+          <div class="metrics-grid" style="margin-bottom: 1.25rem;">
+            <div class="metric-card">
+              <div>
+                <div class="metric-label">Total Fee Invoiced</div>
+                <div id="fees-total-billed" class="metric-value">Rs. 0</div>
+              </div>
+            </div>
+            <div class="metric-card accent">
+              <div>
+                <div class="metric-label">Total Fee Collected</div>
+                <div id="fees-total-collected" class="metric-value">Rs. 0</div>
+              </div>
+            </div>
+            <div class="metric-card warning">
+              <div>
+                <div class="metric-label">Total Outstanding Arrears</div>
+                <div id="fees-total-pending" class="metric-value">Rs. 0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Fee Collection & Official Challan Registry</h3>
+                <p class="card-subtitle">Record cash/bank deposits and print standard 3-copy Pakistani bank challans</p>
+              </div>
+              <div class="card-actions">
+                <button id="btn-export-fees" class="btn btn-sm btn-secondary">Export CSV</button>
+                <button id="btn-record-fee-payment" class="btn btn-sm btn-primary">+ Record Payment</button>
+              </div>
+            </div>
+
+            <div class="table-toolbar">
+              <div class="table-search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="fees-search" placeholder="Search by student, roll no, challan no...">
+              </div>
+
+              <div class="table-filters">
+                <select id="fees-status-filter" class="filter-select">
+                  <option value="all">All Payment Statuses</option>
+                  <option value="paid">Paid</option>
+                  <option value="unpaid">Unpaid / Due</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Challan No</th>
+                    <th>Student Info</th>
+                    <th>Grade</th>
+                    <th>Month</th>
+                    <th>Net Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="fees-table-body">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. VIEW: CLASSES & ACADEMIC WINGS -->
+        <section id="view-classes" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Academic Wings & Class Management</h3>
+                <p class="card-subtitle">Official structure from Playgroup to 10th Matric Arts Specialization</p>
+              </div>
+            </div>
+
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Class Name & Room</th>
+                    <th>Academic Wing</th>
+                    <th>Tuition Fee</th>
+                    <th>Enrolled / Capacity</th>
+                    <th>Class Incharge / Teacher</th>
+                  </tr>
+                </thead>
+                <tbody id="classes-table-body">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. VIEW: FACULTY & STAFF -->
+        <section id="view-staff" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Faculty & Staff Directory</h3>
+                <p class="card-subtitle">Teachers, administration, and executive leadership of the school</p>
+              </div>
+              <button id="btn-add-staff" class="btn btn-sm btn-primary">+ Add Faculty Member</button>
+            </div>
+
+            <div id="staff-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. VIEW: NOTICE BOARD -->
+        <section id="view-notices" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">School Notice Board & Announcements</h3>
+                <p class="card-subtitle">Official announcements for parents, students, and faculty</p>
+              </div>
+              <button id="btn-add-notice" class="btn btn-sm btn-primary">+ Post New Notice</button>
+            </div>
+
+            <div id="notices-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem;">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. VIEW: MEDIA GALLERY -->
+        <section id="view-gallery" class="admin-view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">School Life & Picture Gallery Manager</h3>
+                <p class="card-subtitle">Photos showcase of campus activities, study tours, and ceremonies</p>
+              </div>
+            </div>
+
+            <div id="gallery-items-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. VIEW: SETTINGS & BACKUP -->
+        <section id="view-settings" class="admin-view">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+            
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">School Profile & Fee Challan Configuration</h3>
+              </div>
+
+              <form id="settings-form">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label class="form-label">School Name</label>
+                    <input type="text" id="set-school-name" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Motto / Slogan</label>
+                    <input type="text" id="set-slogan" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Official Phone</label>
+                    <input type="text" id="set-phone" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Official Email</label>
+                    <input type="email" id="set-email" class="form-control" required>
+                  </div>
+                  <div class="form-group full-width">
+                    <label class="form-label">Campus Physical Address</label>
+                    <input type="text" id="set-address" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Principal / Director Name</label>
+                    <input type="text" id="set-principal" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Principal Qualification</label>
+                    <input type="text" id="set-principal-qual" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Active Academic Session</label>
+                    <input type="text" id="set-session" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Bank Name for Fee Challan</label>
+                    <input type="text" id="set-bank-name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Bank Account Title</label>
+                    <input type="text" id="set-account-title" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Bank Account Number / IBAN</label>
+                    <input type="text" id="set-account-num" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Default Challan Due Day of Month</label>
+                    <input type="number" id="set-challan-due" class="form-control" min="1" max="28">
+                  </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; text-align: right;">
+                  <button type="submit" class="btn btn-primary">Save School Profile</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Side Card: Backup & Password -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Data Backup & Restore</h3>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                  Export complete school records (students, fees, inquiries, staff) to a secure JSON file, or restore anytime.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                  <button id="btn-export-backup" class="btn btn-primary" style="width: 100%;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Full Database Backup
+                  </button>
+                  <button id="btn-import-backup" class="btn btn-secondary" style="width: 100%;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Restore from Backup JSON
+                  </button>
+                  <input type="file" id="file-restore-input" accept=".json" style="display: none;">
+
+                  <button id="btn-reset-defaults" class="btn btn-danger btn-sm" style="margin-top: 0.5rem;">
+                    Reset to Default Demo State
+                  </button>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Change Account Password</h3>
+                </div>
+                <form id="password-change-form" style="display: flex; flex-direction: column; gap: 0.85rem;">
+                  <div class="form-group">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" id="pwd-current" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" id="pwd-new" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" id="pwd-confirm" class="form-control" required>
+                  </div>
+                  <button type="submit" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem;">Update Password</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Audit Logs Section -->
+          <div class="card" style="margin-top: 1.5rem;">
+            <div class="card-header">
+              <h3 class="card-title">System Activity & Audit Trail</h3>
+              <span class="card-subtitle">Recent administrative actions</span>
+            </div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-logs-table-body">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODALS
+       ========================================================================== -->
+
+  <!-- Modal: Enroll / Edit Student -->
+  <div id="modal-student" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-student-title" class="modal-title">Enroll Student</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-student')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="stu-edit-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Assigned Roll No *</label>
+            <input type="text" id="stu-rollno" class="form-control" readonly style="background: var(--bg-body); font-weight: bold; color: var(--primary);">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Student Full Name *</label>
+            <input type="text" id="stu-fullname" class="form-control" placeholder="e.g. Fatima Zahra" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Father / Guardian Name *</label>
+            <input type="text" id="stu-fathername" class="form-control" placeholder="e.g. Syed Mukhtar Shah" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gender</label>
+            <select id="stu-gender" class="form-control">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grade / Class *</label>
+            <select id="stu-grade" class="form-control">
+              <option value="Playgroup">Playgroup</option>
+              <option value="Nursery">Nursery</option>
+              <option value="Prep">Prep</option>
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+              <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Pre-9">Pre-9 Arts</option>
+              <option value="Class 9 (Arts)">Class 9 (Arts)</option>
+              <option value="Class 10 (Arts)">Class 10 (Arts)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Section</label>
+            <select id="stu-section" class="form-control">
+              <option value="A">Section A</option>
+              <option value="B">Section B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" id="stu-dob" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact / WhatsApp Number *</label>
+            <input type="tel" id="stu-phone" class="form-control" placeholder="03XXXXXXXXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Monthly Tuition Fee (PKR) *</label>
+            <input type="number" id="stu-fee" class="form-control" value="2500" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Blood Group</label>
+            <select id="stu-blood" class="form-control">
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Residential Address</label>
+            <input type="text" id="stu-address" class="form-control" placeholder="Village / Street, Bhara Kahu">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initial Fee Status</label>
+            <select id="stu-feestatus" class="form-control">
+              <option value="paid">Fee Paid</option>
+              <option value="unpaid">Fee Unpaid</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-student')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveStudentModal()">Save Student Record</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Inquiry Details & Update Status -->
+  <div id="modal-inquiry" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Inquiry Status & Counselor Notes</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-inquiry')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="inq-modal-id">
+        <div style="background: var(--bg-body); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; font-size: 0.9rem; line-height: 1.6;">
+          <div>Parent: <strong id="inq-modal-parent"></strong></div>
+          <div>Child: <strong id="inq-modal-student"></strong> • Class: <span id="inq-modal-grade" class="badge badge-primary"></span></div>
+          <div>Phone: <span id="inq-modal-phone" style="font-weight: 600;"></span></div>
+          <div style="margin-top: 0.5rem; border-top: 1px solid var(--border-light); padding-top: 0.5rem; color: var(--text-body);">
+            <em>"<span id="inq-modal-msg"></span>"</em>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label">Update Status</label>
+          <select id="inq-modal-status" class="form-control">
+            <option value="new">New Inquiry</option>
+            <option value="contacted">Contacted via WhatsApp / Call</option>
+            <option value="interview_scheduled">Campus Visit / Interview Scheduled</option>
+            <option value="admitted">Admitted / Approved</option>
+            <option value="declined">Declined</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Administrative Notes</label>
+          <textarea id="inq-modal-notes" class="form-control" rows="3" placeholder="Add follow-up notes, visit dates, or special parent requests..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-inquiry')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveInquiryModal()">Update Inquiry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Record Fee Payment -->
+  <div id="modal-fee-payment" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Fee Payment</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-fee-payment')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label">Select Student *</label>
+          <select id="fee-modal-student" class="form-control" required>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Amount Paid (PKR) *</label>
+            <input type="number" id="fee-modal-amount" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fee Month *</label>
+            <input type="text" id="fee-modal-month" class="form-control" value="November 2026" required>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Payment Mode</label>
+            <select id="fee-modal-method" class="form-control">
+              <option value="Cash (School Counter)">Cash (School Accounts Counter)</option>
+              <option value="Bank Transfer (ABL)">Bank Deposit / Transfer (Allied Bank)</option>
+              <option value="EasyPaisa / JazzCash">EasyPaisa / JazzCash Mobile Banking</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-fee-payment')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveFeePaymentModal()">Record Payment & Issue Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add Staff -->
+  <div id="modal-staff" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Faculty / Staff Member</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-staff')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Teacher / Staff Full Name *</label>
+            <input type="text" id="stf-name" class="form-control" placeholder="e.g. Ms. Hina Bukhari" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Designation / Role *</label>
+            <input type="text" id="stf-desig" class="form-control" placeholder="e.g. Senior Arts Teacher" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Academic Qualification</label>
+            <input type="text" id="stf-qual" class="form-control" placeholder="e.g. M.A. History, B.Ed">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Wing / Department</label>
+            <select id="stf-dept" class="form-control">
+              <option value="Early Childhood Wing">Early Childhood Wing</option>
+              <option value="Primary Wing">Primary Wing</option>
+              <option value="Middle Wing">Middle Wing</option>
+              <option value="Secondary Arts Wing">Secondary Arts Wing</option>
+              <option value="Administration & Accounts">Administration & Accounts</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Phone</label>
+            <input type="tel" id="stf-phone" class="form-control" placeholder="03XXXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="stf-email" class="form-control" placeholder="name@aok.site.je">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-staff')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveStaffModal()">Add Faculty Member</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Post Notice -->
+  <div id="modal-notice" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Publish Notice / Announcement</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-notice')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom: 1rem;">
+          <label class="form-label">Notice Title *</label>
+          <input type="text" id="not-title" class="form-control" placeholder="e.g. Winter Vacation Schedule 2026" required>
+        </div>
+
+        <div class="form-grid" style="margin-bottom: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="not-category" class="form-control">
+              <option value="Admissions">Admissions</option>
+              <option value="Academic">Academic / Examinations</option>
+              <option value="Holiday">Holidays / Breaks</option>
+              <option value="Meeting">Parent-Teacher Meeting</option>
+              <option value="Fees">Fee Notice</option>
+              <option value="General">General Campus Announcement</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select id="not-priority" class="form-control">
+              <option value="Normal">Normal</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent / Alert</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Target Audience</label>
+            <input type="text" id="not-audience" class="form-control" value="All Parents & Students">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notice Content / Text *</label>
+          <textarea id="not-content" class="form-control" rows="4" placeholder="Enter complete notification text..." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('modal-notice')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveNoticeModal()">Publish Announcement</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PRINTABLE CONTAINERS (Hidden on screen, visible during print)
+       ========================================================================== -->
+  <div id="printable-challan-container"></div>
+  <div id="printable-idcard-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

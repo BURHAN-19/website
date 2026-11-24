@@ -18,11 +18,22 @@ This website is a modern, responsive, high-performance static web application bu
 
 ```text
 AOK.website/
+├── admin/                      # Complete School Admin Dashboard Suite
+│   ├── css/
+│   │   └── admin.css           # Modern dashboard UI & print challan stylesheets
+│   ├── js/
+│   │   ├── db.js               # Reactive school database engine & seed data
+│   │   ├── auth.js             # Session auth & role permissions
+│   │   └── admin.js            # Dashboard UI controller, charts & print engine
+│   ├── index.html              # Main multi-view admin dashboard application
+│   └── login.html              # Secure admin login portal
 ├── assets/
 │   └── images/
 │       ├── logo.png             # School logo insignia
 │       ├── logo.PNG             # Original logo copy
-│       └── favicon.svg          # Vector favicon
+│       ├── favicon.svg          # Vector favicon
+│       ├── principal.jpg        # Principal / Director leadership photo
+│       └── gallery/             # Campus & event gallery photos
 ├── css/
 │   └── style.css               # Design system & responsive styles
 ├── js/
@@ -39,6 +50,30 @@ AOK.website/
 ├── .gitignore                  # Git ignore rules
 └── README.md                   # Documentation & setup guide
 ```
+
+---
+
+## 🔐 School Admin Dashboard
+
+The website includes a complete, professional, and fully responsive **Admin Dashboard Suite** located at `/admin/` (or `admin/login.html`).
+
+### Demo Login Accounts:
+| Role | Username | Password | User Profile |
+| :--- | :--- | :--- | :--- |
+| **Principal & Super Admin** | `admin` | `admin123` | Shahzad Ali Shah Jaffri (MBA Finance) |
+| **Accounts & Fee Incharge** | `accounts` | `accounts123` | Syed Ali Asghar (B.Com / PIPFA) |
+| **Academic Coordinator** | `coordinator` | `academic123` | Sir Usman Ali (Secondary Arts Lead) |
+
+### Core Modules:
+1. **Dashboard KPI Overview**: Real-time stats on enrolled students, monthly fee recovery %, pending admission inquiries, and faculty count. Includes dynamic SVG charts for academic wing distributions.
+2. **Admissions & Inquiries CRM**: Synchronized directly with the website's contact form. Features one-click WhatsApp parent messaging, phone calling, status pipeline (New -> Contacted -> Interview -> Admitted), and one-click student enrollment.
+3. **Student Directory**: Student registry with roll numbers (`AOK-2026-001`...), class filters, search, fee status, and instant **Printable Student ID Card** with school crest and emergency details.
+4. **Fee Management & Pakistani 3-Copy Bank Challan Generator**: Complete fee tracking, cash/bank receipt generation, and **standard 3-copy bank voucher printing** (Bank Copy, School Copy, Student Copy) formatted for standard Pakistani school banking guidelines.
+5. **Academic Wings & Classes**: Classes from Playgroup to 10th Arts with student capacity meters and teacher assignments.
+6. **Faculty & Staff Directory**: Teacher records, qualifications, contact details, and department allocations.
+7. **School Notice Board**: Publish notices with categories, audience targets, and priority tags.
+8. **Media Gallery Manager**: Manage showcase photography for annual ceremonies and educational study trips.
+9. **Backup, Restore & Audit Trail**: Download complete database backup as JSON, restore backups, or reset to factory demo state. Includes a live administrative audit log.
 
 ---
 

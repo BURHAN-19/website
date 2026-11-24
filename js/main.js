@@ -129,6 +129,7 @@ function initContactForm() {
 
   function getFormData() {
     const name = form.querySelector('[name="parent_name"]')?.value.trim();
+    const studentName = form.querySelector('[name="student_name"]')?.value.trim();
     const phone = form.querySelector('[name="phone"]')?.value.trim();
     const grade = form.querySelector('[name="student_grade"]')?.value;
     const message = form.querySelector('[name="message"]')?.value.trim();
@@ -138,7 +139,49 @@ function initContactForm() {
       return null;
     }
 
-    return { name, phone, grade: grade || 'General Inquiry', message: message || 'N/A' };
+    return { 
+      name, 
+      studentName: studentName || 'Not specified', 
+      phone, 
+      grade: grade || 'General Inquiry', 
+      message: message || 'N/A' 
+    };
+  }
+
+  // Sync inquiry directly to local admin database store
+  function saveInquiryToAdminDB(data) {
+    try {
+      const dbKey = 'aok_school_database_v1';
+      let db = null;
+      const raw = localStorage.getItem(dbKey);
+      if (raw) {
+        db = JSON.parse(raw);
+      }
+      if (!db) {
+        db = { inquiries: [] };
+      }
+      if (!db.inquiries) {
+        db.inquiries = [];
+      }
+
+      const newInq = {
+        id: `inq_${Date.now()}`,
+        parentName: data.name,
+        studentName: data.studentName,
+        phone: data.phone,
+        grade: data.grade,
+        message: data.message,
+        status: 'new',
+        createdAt: new Date().toISOString(),
+        notes: 'Submitted via website online inquiry form.'
+      };
+
+      db.inquiries.unshift(newInq);
+      localStorage.setItem(dbKey, JSON.stringify(db));
+      window.dispatchEvent(new Event('aok_db_updated'));
+    } catch (e) {
+      console.warn('Could not record inquiry in local admin database:', e);
+    }
   }
 
   if (whatsappBtn) {
@@ -147,8 +190,11 @@ function initContactForm() {
       const data = getFormData();
       if (!data) return;
 
+      saveInquiryToAdminDB(data);
+
       const waText = `*Admission Inquiry - The Ambassadors of Knowledge*\n` +
-                     `*Parent/Student Name:* ${data.name}\n` +
+                     `*Parent Name:* ${data.name}\n` +
+                     `*Student Name:* ${data.studentName}\n` +
                      `*Phone:* ${data.phone}\n` +
                      `*Grade:* ${data.grade}\n` +
                      `*Message/Questions:* ${data.message}\n\n` +
@@ -165,9 +211,12 @@ function initContactForm() {
       const data = getFormData();
       if (!data) return;
 
+      saveInquiryToAdminDB(data);
+
       const subject = `Admission Inquiry for ${data.grade} - ${data.name}`;
       const body = `Dear Administration,\n\nI would like to inquire about admission at The Ambassadors of Knowledge:\n\n` +
-                   `Name: ${data.name}\n` +
+                   `Parent Name: ${data.name}\n` +
+                   `Student Name: ${data.studentName}\n` +
                    `Contact Phone: ${data.phone}\n` +
                    `Grade: ${data.grade}\n` +
                    `Message: ${data.message}\n\n` +

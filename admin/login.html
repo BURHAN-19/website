@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal Login | The Ambassadors of Knowledge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    body {
+      background: radial-gradient(circle at 10% 20%, #061e47 0%, #041029 90%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2.25rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1rem;
+      display: block;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+
+    .login-title {
+      font-size: 1.45rem;
+      color: var(--primary-dark);
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .login-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--secondary-light);
+      color: var(--primary);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .login-alert {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .login-alert.error {
+      display: block;
+      background: var(--danger-soft);
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap .form-control {
+      padding-right: 2.75rem;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    .login-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .login-options label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .demo-accounts {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .demo-accounts-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .demo-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .demo-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.75rem;
+      background: var(--bg-body);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .demo-chip:hover {
+      background: var(--secondary-light);
+      border-color: var(--secondary);
+    }
+
+    .demo-chip strong {
+      color: var(--primary-dark);
+    }
+
+    .demo-chip span {
+      color: var(--text-muted);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .back-link a {
+      color: #94a3b8;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .back-link a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="../assets/images/logo.png" alt="AOK Monogram" class="login-logo">
+        <h1 class="login-title">The Ambassadors of Knowledge</h1>
+        <p class="login-subtitle">School Administration Suite</p>
+        <span class="login-badge">Bhara Kahu, Islamabad</span>
+      </div>
+
+      <div id="login-alert" class="login-alert"></div>
+
+      <form id="admin-login-form" class="login-form">
+        <div class="form-group">
+          <label class="form-label" for="username">Username or Email</label>
+          <input type="text" id="username" class="form-control" placeholder="e.g. admin or admin@aok.site.je" required autofocus autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="password-wrap">
+            <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+            <button type="button" id="toggle-pwd-btn" class="toggle-password" title="Toggle password visibility">
+              <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="login-options">
+          <label>
+            <input type="checkbox" id="remember-me" checked>
+            <span>Keep me logged in</span>
+          </label>
+          <a href="../contact.html" style="font-size: 0.82rem; color: var(--secondary);">Need Help?</a>
+        </div>
+
+        <button type="submit" id="submit-login-btn" class="btn btn-primary" style="padding: 0.75rem; font-size: 0.95rem; width: 100%;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Sign In to Dashboard
+        </button>
+      </form>
+
+      <!-- Demo Credentials Quick Selector -->
+      <div class="demo-accounts">
+        <div class="demo-accounts-title">1-Click Demo Login Profiles</div>
+        <div class="demo-chips">
+          <div class="demo-chip" onclick="fillCredentials('admin', 'admin123')">
+            <div>
+              <strong>Principal / Super Admin</strong>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Shahzad Ali Shah Jaffri (MBA Finance)</div>
+            </div>
+            <span>admin / admin123</span>
+          </div>
+
+          <div class="demo-chip" onclick="fillCredentials('accounts', 'accounts123')">
+            <div>
+              <strong>Accounts & Fee Incharge</strong>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Syed Ali Asghar</div>
+            </div>
+            <span>accounts / accounts123</span>
+          </div>
+
+          <div class="demo-chip" onclick="fillCredentials('coordinator', 'academic123')">
+            <div>
+              <strong>Academic Coordinator</strong>
+              <div style="font-size: 0.7rem; color: var(--text-muted);">Sir Usman Ali (Secondary Arts)</div>
+            </div>
+            <span>coordinator / academic123</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-link">
+      <a href="../index.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Return to School Public Website
+      </a>
+    </div>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // If already logged in, redirect straight to dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.SchoolAuth && window.SchoolAuth.isAuthenticated()) {
+        window.location.href = 'index.html';
+      }
+
+      const loginForm = document.getElementById('admin-login-form');
+      const alertBox = document.getElementById('login-alert');
+      const togglePwdBtn = document.getElementById('toggle-pwd-btn');
+      const pwdInput = document.getElementById('password');
+
+      // Password toggle
+      togglePwdBtn.addEventListener('click', () => {
+        const type = pwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        pwdInput.setAttribute('type', type);
+      });
+
+      // Submit Login
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alertBox.className = 'login-alert';
+        alertBox.textContent = '';
+
+        const username = document.getElementById('username').value.trim();
+        const password = pwdInput.value;
+        const rememberMe = document.getElementById('remember-me').checked;
+
+        const result = window.SchoolAuth.login(username, password, rememberMe);
+        if (result.success) {
+          window.location.href = 'index.html';
+        } else {
+          alertBox.className = 'login-alert error';
+          alertBox.textContent = result.message || 'Login failed. Please check credentials.';
+        }
+      });
+    });
+
+    function fillCredentials(username, password) {
+      document.getElementById('username').value = username;
+      document.getElementById('password').value = password;
+      const alertBox = document.getElementById('login-alert');
+      alertBox.className = 'login-alert';
+      alertBox.textContent = '';
+      document.getElementById('submit-login-btn').focus();
+    }
+  </script>
+</body>
+</html>
